@@ -65,7 +65,7 @@ class UserAPI extends DataSource {
     const found = await this.store.trips.findAll({
       where: { userId },
     });
-    return found && found.length
+    return found && found.length //is it found and does found have lenght?
       ? found.map(l => l.dataValues.launchId).filter(l => !!l)
       : [];
   }
