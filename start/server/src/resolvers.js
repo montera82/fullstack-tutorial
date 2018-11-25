@@ -27,8 +27,7 @@ module.exports = {
 				// last item in _all_ results, then there are no more results after this
 				hasMore: launches.length ?
 					launches[launches.length - 1].cursor !==
-					allLaunches[allLaunches.length - 1].cursor :
-					false,
+					allLaunches[allLaunches.length - 1].cursor : false,
 			};
 		},
 		launch: (_, {
@@ -44,29 +43,40 @@ module.exports = {
 		me: async (_, __, {
 			dataSources
 		}) => dataSources.userAPI.findOrCreateUser(),
-    },
-    
-    Mission: {
-        missionPatch(mission, {size} ={size : 'LARGE' }, ) {
-            return size == 'SMALL'?
-            mission.missionPatchSmall: 
-            mission.missionPatchLarge;
-        }
-    },
-    Launch: {
-        isBooked: async(launch, _, {dataSources} ) => {
-            return dataSources.userAPI.isBookedOnLaunch({launchId: launch.id});
-        }
-    },
-    User: {
-        trips: async(_, __, { dataSources }) => {
-            const lauchIds = await dataSources.userAPI.getLaunchIdsByUser();
-            if (!lauchIds.length) return [];
-            //look up launches by their id
-            return (
-             dataSources.launchAPI.getLaunchesByIds({lauchIds})
-            ) || [];
-        } 
-    }
-};
+	},
 
+	Mission: {
+		missionPatch(mission, {
+			size
+		} = {
+			size: 'LARGE'
+		}, ) {
+			return size == 'SMALL' ?
+				mission.missionPatchSmall :
+				mission.missionPatchLarge;
+		}
+	},
+	Launch: {
+		isBooked: async (launch, _, {
+			dataSources
+		}) => {
+			return dataSources.userAPI.isBookedOnLaunch({
+				launchId: launch.id
+			});
+		}
+	},
+	User: {
+		trips: async (_, __, {
+			dataSources
+		}) => {
+			const lauchIds = await dataSources.userAPI.getLaunchIdsByUser();
+			if (!lauchIds.length) return [];
+			//look up launches by their id
+			return (
+				dataSources.launchAPI.getLaunchesByIds({
+					lauchIds
+				})
+			) || [];
+		}
+	}
+};

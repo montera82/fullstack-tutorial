@@ -1,3 +1,5 @@
 node_modules
 .DS_Store
 .env
+.circleci/config-test.yml
+.circleci/k8s.yml
